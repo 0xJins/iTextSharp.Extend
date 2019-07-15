@@ -1,4 +1,5 @@
 ﻿using iTextSharp.Constants;
+using iTextSharp.DirectOpertion;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
@@ -16,7 +17,7 @@ namespace iTextSharp
         #endregion
 
         #region Internal Fields
-        internal List<DirectOpertion> _eachDirectOpertions = null;
+        internal List<IDirectOpertion> _eachDirectOpertions = null;
         #endregion
 
         #region Properties
@@ -27,7 +28,7 @@ namespace iTextSharp
 
         public DirectContent(iTextSharp.Utility utility, ContentLayer layer)
         {
-            _eachDirectOpertions = new List<DirectOpertion>();
+            _eachDirectOpertions = new List<IDirectOpertion>();
 
             ContentLayer = layer;
 
@@ -38,15 +39,27 @@ namespace iTextSharp
 
         #region Public Methods
 
-        public DirectContent EachPageAddParagraph()
+        public DirectContent EachPageAddParagraph(string paragraph)
         {
-            _eachDirectOpertions.Add(new DirectAddParagraph(_utility.Font));
+            _eachDirectOpertions.Add(new DirectAddParagraph(paragraph,_utility.Font));
             return this;
         }
 
-        public DirectContent EachPageBackground()
+        public DirectContent EachPageBackground(Uri imgUri)
         {
-            _eachDirectOpertions.Add(new DirectAddParagraph(_utility.Font));
+            _eachDirectOpertions.Add(new DirectAddImage(imgUri));
+            return this;
+        }
+
+        public DirectContent EachPageHeader(string header)
+        {
+            _eachDirectOpertions.Add(new DirectAddPageHeader(header,_utility.Font));
+            return this;
+        }
+
+        public DirectContent EachPageNumber()
+        {
+            _eachDirectOpertions.Add(new DirectAddPageNumber(_utility.Font));
             return this;
         }
         #endregion
@@ -60,65 +73,7 @@ namespace iTextSharp
         #endregion
     }
 
-    public class DefaultPageEvent : PdfPageEventHelper, IPdfPageEvent
-    {
-        private DirectContent _directContent = null;
-        public DefaultPageEvent(DirectContent directContent)
-        {
-            _directContent = directContent;
-        }
-        public override void OnEndPage(PdfWriter writer, Document document)
-        {
-            base.OnEndPage(writer, document);
+    
 
-            PdfContentByte pdfContent =
-                _directContent.ContentLayer == ContentLayer.Content ?
-                writer.DirectContent :
-                writer.DirectContentUnder;
-
-            foreach (var oper in _directContent._eachDirectOpertions)
-            {
-                oper.Write(document, writer, pdfContent);
-            }
-        }
-    }
-
-
-    public interface DirectOpertion
-    {
-        void Write(text.Document document, text.pdf.PdfWriter writer, PdfContentByte pdfContent);
-    }
-
-
-    public class DirectAddParagraph : DirectOpertion
-    {
-        private Font _font = null;
-        public DirectAddParagraph(Font font)
-        {
-            _font = font;
-        }
-
-        public void Write(Document document, PdfWriter writer, PdfContentByte pdfContent)
-        {
-            Phrase header = new Phrase("签字确认: ____________", _font);
-
-            //页眉显示的位置 
-            ColumnText.ShowTextAligned(pdfContent, Element.ALIGN_CENTER, header,
-                       document.Right - ColumnText.GetWidth(header), document.Bottom - 5, 0);  // document.Top 为Page的margin.top
-        }
-    }
-
-    public class DirectAddImage : DirectOpertion
-    {
-        private Uri _imgUri = null;
-        public DirectAddImage(Uri imgUri)
-        {
-            _imgUri = imgUri;
-        }
-
-        public void Write(Document document, PdfWriter writer, PdfContentByte pdfContent)
-        {
-
-        }
-    }
+    
 }

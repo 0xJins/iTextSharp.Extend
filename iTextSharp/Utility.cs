@@ -267,6 +267,11 @@ namespace iTextSharp
         }
         #endregion
 
+        public Utility NewPage()
+        {
+            this._docOperations.Add(new NewPageTextSharpOperation());
+            return this;
+        }
         #region Save
 
         /// <summary>

@@ -47,7 +47,13 @@
     <Compile Include="Attributes\ColumnAttribute.cs" />
     <Compile Include="Constants\Alignment.cs" />
     <Compile Include="Constants\ContentLayer.cs" />
+    <Compile Include="DefaultPageEvent.cs" />
+    <Compile Include="DirectOpertion\DirectAddPageNumber.cs" />
+    <Compile Include="DirectOpertion\DirectAddPageHeader.cs" />
     <Compile Include="DirectContent.cs" />
+    <Compile Include="DirectOpertion\DirectAddImage.cs" />
+    <Compile Include="DirectOpertion\DirectAddParagraph.cs" />
+    <Compile Include="DirectOpertion\IDirectOpertion.cs" />
     <Compile Include="TextSharpOperation\AddAuthorTextSharpOperation.cs" />
     <Compile Include="TextSharpOperation\AddCreatorTextSharpOperation.cs" />
     <Compile Include="TextSharpOperation\AddDataTableTextSharpOperation.cs" />
@@ -56,8 +62,9 @@
     <Compile Include="TextSharpOperation\AddListTableTextSharpOperation.cs" />
     <Compile Include="TextSharpOperation\AddSubjectTextSharpOperation.cs" />
     <Compile Include="TextSharpOperation\AddTitleTextSharpOperation.cs" />
-    <Compile Include="TextSharpOperation\ITextSharpOperation.cs" />
+    <Compile Include="TextSharpOperation\iTextSharpOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextSharpOperation\NewPageTextSharpOperation.cs" />
     <Compile Include="Thickness.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>

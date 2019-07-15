@@ -34,8 +34,14 @@ namespace iTextSharp.Extend.Demo
                 .SetPageSize(1000, 400)
                 .SetPagePadding(20)
                 .WriteParagraph("Hello world", Constants.Alignment.Center);
-            utility.DirectContent.EachPageAddParagraph();
+            utility.DirectContent.EachPageHeader("XXXXXXXXXXX");
+            utility.DirectContent.EachPageAddParagraph("签字确认: ____________");
+            utility.DirectContent.EachPageNumber();
 
+            utility.NewPage().WriteParagraph("Hello world", Constants.Alignment.Center);
+            utility.NewPage().WriteParagraph("Hello world", Constants.Alignment.Center);
+            utility.NewPage().WriteParagraph("Hello world", Constants.Alignment.Center);
+            utility.NewPage().WriteParagraph("Hello world", Constants.Alignment.Center);
             string dir = ShowFileDialog("HelloWorld.pdf");
             if(!string.IsNullOrEmpty(dir))
             {
