@@ -45,9 +45,9 @@ namespace iTextSharp
             return this;
         }
 
-        public DirectContent EachPageBackground(Uri imgUri)
+        public DirectContent EachPageBackground(Uri imgUri,float absoluteX, float absoluteY)
         {
-            _eachDirectOpertions.Add(new DirectAddImage(imgUri));
+            _eachDirectOpertions.Add(new DirectAddImage(imgUri, absoluteX, absoluteY));
             return this;
         }
 

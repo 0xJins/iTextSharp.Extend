@@ -35,9 +35,11 @@ namespace iTextSharp.Extend.Demo
                 .SetPagePadding(20)
                 .WriteParagraph("Hello world", Constants.Alignment.Center);
             utility.DirectContent.EachPageHeader("XXXXXXXXXXX");
-            utility.DirectContent.EachPageAddParagraph("签字确认: ____________");
-            utility.DirectContent.EachPageNumber();
-
+            utility.DirectContentUnder.EachPageAddParagraph("签字确认: ____________");
+            utility.DirectContentUnder.EachPageNumber();
+            utility.DirectContentUnder.EachPageBackground(
+                new Uri("http://v2.logodashi.com/public/uploads/20190715/501d0cae7eb3594448ceef35ec116706.jpg", UriKind.Absolute)
+                ,40,40);
             utility.NewPage().WriteParagraph("Hello world", Constants.Alignment.Center);
             utility.NewPage().WriteParagraph("Hello world", Constants.Alignment.Center);
             utility.NewPage().WriteParagraph("Hello world", Constants.Alignment.Center);

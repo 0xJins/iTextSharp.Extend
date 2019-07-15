@@ -11,14 +11,20 @@ namespace iTextSharp.DirectOpertion
     public class DirectAddImage : IDirectOpertion
     {
         private Uri _imgUri = null;
-        public DirectAddImage(Uri imgUri)
+        private float _absoluteX;
+        private float _absoluteY;
+        public DirectAddImage(Uri imgUri, float absoluteX,float absoluteY)
         {
             _imgUri = imgUri;
+            _absoluteX = absoluteX;
+            _absoluteY = absoluteY;
         }
 
         public void Write(Document document, PdfWriter writer, PdfContentByte pdfContent)
         {
-
+            Image img = Image.GetInstance(_imgUri);
+            img.SetAbsolutePosition(_absoluteX, _absoluteY);
+            pdfContent.AddImage(img);
         }
     }
 }
