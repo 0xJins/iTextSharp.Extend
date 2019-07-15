@@ -34,6 +34,7 @@ namespace iTextSharp.Extend.Demo
                 .SetPageSize(1000, 400)
                 .SetPagePadding(20)
                 .WriteParagraph("Hello world", Constants.Alignment.Center);
+            utility.DirectContent.EachPageAddParagraph();
 
             string dir = ShowFileDialog("HelloWorld.pdf");
             if(!string.IsNullOrEmpty(dir))

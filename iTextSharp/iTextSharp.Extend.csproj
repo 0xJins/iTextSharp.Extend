@@ -46,7 +46,8 @@
   <ItemGroup>
     <Compile Include="Attributes\ColumnAttribute.cs" />
     <Compile Include="Constants\Alignment.cs" />
-    <Compile Include="DirectContentUnder.cs" />
+    <Compile Include="Constants\ContentLayer.cs" />
+    <Compile Include="DirectContent.cs" />
     <Compile Include="TextSharpOperation\AddAuthorTextSharpOperation.cs" />
     <Compile Include="TextSharpOperation\AddCreatorTextSharpOperation.cs" />
     <Compile Include="TextSharpOperation\AddDataTableTextSharpOperation.cs" />

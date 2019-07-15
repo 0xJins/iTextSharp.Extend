@@ -28,13 +28,51 @@ namespace iTextSharp
 
         #region Fields
 
-        private Font _font = null;
         private List<iTextSharpOperation> _docOperations = null;
         /// <summary>
         /// 页面大小
         /// </summary>
         private Rectangle _pageRect = null;
+
+        #endregion
+
+        #region Properties
         private Thickness _pagePadding;
+
+        /// <summary>
+        /// 页面边距
+        /// </summary>
+        public Thickness PagePadding
+        {
+            get { return _pagePadding; }
+            set { _pagePadding = value; }
+        }
+
+        private DirectContent _directContent;
+
+        public DirectContent DirectContent
+        {
+            get { return _directContent; }
+            private set { _directContent = value; }
+        }
+
+        private DirectContent _directContentUnder;
+
+        public DirectContent DirectContentUnder
+        {
+            get { return _directContentUnder; }
+            private set { _directContentUnder = value; }
+        }
+
+
+        private Font _font;
+
+        internal Font Font
+        {
+            get { return _font; }
+            set { _font = value; }
+        }
+
         #endregion
 
         #region Constructors
@@ -42,6 +80,8 @@ namespace iTextSharp
         public Utility()
         {
             _docOperations = new List<iTextSharpOperation>();
+            DirectContent = new DirectContent(this, ContentLayer.Content);
+            DirectContentUnder = new DirectContent(this, ContentLayer.ContentUnder);
 
             // 解决中文字体
             string fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), MSYH);
@@ -109,6 +149,10 @@ namespace iTextSharp
             this._docOperations.Add(new AddDataTableTextSharpOperation(table, borderColor, this._font));
             return this;
         }
+
+        #endregion
+
+        #region WriteListTable
 
         /// <summary>
         /// 解析List转换成表格
@@ -242,6 +286,7 @@ namespace iTextSharp
                 {
                     document.Open();
 
+                    OnSave?.Invoke(document, writer, saveDir);
                     foreach (var ele in _docOperations)
                     {
                         ele.Write(document);
@@ -250,6 +295,8 @@ namespace iTextSharp
                 }
             }
         }
+
+        internal event Action<Document, PdfWriter, string> OnSave;
 
         /// <summary>
         /// 异步保存
